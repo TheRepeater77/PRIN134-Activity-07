@@ -2,4 +2,36 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    
+}
+
+#main-container{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(47, 48, 49);
+
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-container{
+    position: absolute;
+}
+
+.container{
+    padding: 10px;
+    border-radius: 3px;
+    background-color: rgb(245, 189, 37);
+    position: absolute;
+}
+
+#add_player{
+    left: -40vw;
+    top: -40vh;
 }
