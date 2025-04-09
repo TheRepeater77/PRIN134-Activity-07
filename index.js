@@ -192,5 +192,7 @@ ${basketball} Round ${round + 1} ${tiebreaker_msg}
   showPlacing();
 }
 
+
+
 gameStart();
 
