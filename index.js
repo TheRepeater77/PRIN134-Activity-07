@@ -196,3 +196,11 @@ ${basketball} Round ${round + 1} ${tiebreaker_msg}
 
 gameStart();
 
+
+const cards = document.querySelectorAll(".card");
+cards.forEach(card => {
+  card.style.setProperty("--sizeState","big");
+  card.addEventListener("click", () => {
+    card.classList.toggle("card-focus");
+  });
+});

@@ -161,23 +161,42 @@
     border-radius: 10px;
 
     width: 500px;
+    min-width: 500px;
     height: 600px;
+    min-height: 500px;
+    font-size: 16px;
+
+    margin: 25px;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    transition-duration: 1s;
+}
+
+.card-focus{
+    border-width: 8px;
+    border-radius: 4px;
+    width: 200px;
+    min-width: 200px;
+    height: 240px;
+    min-height: 240px;
+    font-size: 6.4px;
+    margin:10px;
 }
 
 .card .round-title{
-    font-size: 30px;
-    padding: 10px;
+    font-size: 200%;
+    padding: 5%;
 }
 
 .card .round-players{
     width: 100%;
     height: 100%;
-    padding: 10px;
+    font-size: 100%;
+    padding: 5%;
 
     display: flex;
     flex-direction: column;
@@ -186,10 +205,10 @@
 }
 
 .card ol{
-    padding-left: 20px;
+    
 }
 
 .card ol li{
-    padding: 10px;
+    padding-bottom: 20%;
 }
 /* GAME END ========================================= */
