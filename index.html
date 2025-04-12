@@ -13,20 +13,21 @@
             <div id="player-row" class="row">
                 <div id="player-container">
                     <div id="add_player" class="box" >
-                        <label for="add_player_text"><strong>Add Player: </strong></label>
-                        <input name="add_player_text" type="text">
-                        <button><strong>Add</strong></button>
+                        <form onsubmit="return false">
+                            <label for="add_player_text"><strong>Add Player: </strong></label>
+                            <input name="add_player_text" type="text" placeholder="Enter Player Name">
+                            <button><strong>Add</strong></button>
+                        </form>
                     </div>
                     <div id="player_list" class="container box">
                         <table>
                             <thead>
                                 <td><strong>Player</strong></td>
-                                <td><strong>Team</strong></td>
                                 <td class="score_show "><strong>Scores</strong></td>
+                                <td class="delete_show"></td>
                             </thead>
                             <tr>
                                 <td>Jackson Butch</td>
-                                <td>Whale Blues</td>
                                 <td class="score_show score_hide">200</td>
                             </tr>
                         </table>
@@ -36,7 +37,10 @@
             <div id="game-row" class="row">
                 <div id="game-container">
                     <div id="rounds" class="box">
-                        <div class="card">
+                        <div class="start-button">
+                            <button><strong>START</strong></button>
+                        </div>
+                        <!-- <div class="card">
                             <strong class="round-title">Round 1</strong>
                             <div class="round-players">
                                 <ol>
@@ -69,7 +73,7 @@
                                     <li>Jackson Butch</li>
                                 </ol>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

@@ -29,41 +29,7 @@
     display: flex;
     justify-content: center;
 }
-
-/* ========================================= PLAYER START */
-#player-container{
-    width: 500px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ---------------------------- PLAYER ADD START */
-#add_player{
-    margin-bottom: 20px;
-    display: flex;
-}
-#add_player input{
-    width: 50%;
-    padding: 2px;
-
-    border: 0px none;
-    background-color: rgb(245, 189, 37);
-    border-bottom: 1px solid black;
-}
-#add_player label{
-    margin-right: 5px;
-    margin-left: auto;
-}
-#add_player input:focus{
-    outline: 0;
-    background-color: rgb(236, 179, 21);
-}
-#add_player input:focus{
-    outline: 0;
-    background-color: rgb(236, 179, 21);
-}
-#add_player button{
+button{
     width: 100px;
     margin-left: auto;
     margin-right: auto;
@@ -78,8 +44,7 @@
 
     transition-duration: 100ms;
 }
-
-#add_player button:active{
+button:active{
     width: 100px;
     margin-left: auto;
     margin-right: auto;
@@ -94,19 +59,58 @@
 
 
     transition-duration: 100ms;
-
 }
-#add_player button:active strong{
+button:active strong{
     position: relative;
     top: 1px;
     left: 1px;
     transition-duration: 100ms;
 }
+
+/* ========================================= PLAYER START */
+#player-container{
+    width: 500px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------------------------- PLAYER ADD START */
+#add_player{
+    margin-bottom: 20px;
+}
+#add_player form{
+    width: 100%;
+    display: flex;
+}
+#add_player input{
+    width: 50%;
+    padding: 2px;
+
+    border: 0px none;
+    background-color: rgb(245, 189, 37);
+    border-bottom: 1px solid black;
+}
+#add_player input::placeholder{
+    font-style: italic;
+}
+#add_player label{
+    margin-right: 5px;
+    margin-left: auto;
+}
+#add_player input:focus{
+    outline: 0;
+    background-color: rgb(236, 179, 21);
+}
+#add_player input:focus{
+    outline: 0;
+    background-color: rgb(236, 179, 21);
+}
 /* PLAYER ADD END ---------------------------- */
 
 #player_list{
     width: 100%;
-    height: 100%;
+    height: auto;
     overflow-y: auto;
     overflow-x:hidden;
     scroll-behavior: smooth;
@@ -131,7 +135,6 @@
 /* PLAYER END ========================================= */
 
 /* ========================================= GAME START */
-
 #game-row{
     padding-left: 0px;
 }
@@ -154,7 +157,7 @@
     overflow-y: auto;
     overflow-x: hidden;
 }
-
+/* ---------------------------- CARD START */
 .card{
     background-color: rgb(255, 230, 161);
     border: 20px solid rgb(241, 208, 118);
@@ -210,5 +213,11 @@
 
 .card ol li{
     padding-bottom: 20%;
+}
+/* CARD END ---------------------------- */
+
+.start-button button{
+    padding: 20px;
+    width: 200px;
 }
 /* GAME END ========================================= */

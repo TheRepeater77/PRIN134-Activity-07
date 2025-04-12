@@ -1,3 +1,26 @@
+/* ----------------------------- Front End Variables START */ 
+const cards = document.querySelectorAll(".card");
+cards.forEach(card => {
+  card.style.setProperty("--sizeState","big");
+  card.addEventListener("click", () => {
+    card.classList.toggle("card-focus");
+  });
+});
+
+const add_player_btn = document.querySelector("#add_player button");
+add_player_btn.addEventListener("click", () => {
+  takePlayers();
+});
+const start_btn = document.querySelector(".start-button button");
+start_btn.addEventListener("click", () => {
+  gameStart();
+});
+
+const player_list = document.querySelector("#player_list");
+const player_table = player_list.querySelector("table");
+/* Front End Variables END ----------------------------- */ 
+
+/* ----------------------------- Player Object START */ 
 class Player{
   constructor(var1, var2, var3){
     this.name = var1;
@@ -15,7 +38,9 @@ class Player{
     return;
   }
 }
+/* Player Object END ----------------------------- */ 
 
+/* ----------------------------- Game Function Variables START */ 
 const trophy = String.fromCodePoint(0x1F3C6); // 🏆
 const fire = String.fromCodePoint(0x1F3C0); // 🏀
 const basketball = String.fromCodePoint(0x1F525); // 🔥
@@ -24,26 +49,22 @@ const second_place = String.fromCodePoint(0x1f948); // 🥈
 const third_place = String.fromCodePoint(0x1f949); // 🥉
 const green_circle = String.fromCodePoint(0x1F7E2); // 🟢
 
-const player1 = new Player("Johnson McBard",0,"Black Bulls");
-const player2 = new Player("Bron Cain",0,"Black Bulls");
-const player3 = new Player("Shaun Lane",0,"Black Bulls");
-const player4 = new Player("Lebon Zane",0,"White Whales");
-const player5 = new Player("Tom Cory",0,"White Whales");
-const player6 = new Player("Kevin Hart",0,"White Whales");
-const player7 = new Player("Jame Hard",0,"Black Bulls");
-const player8 = new Player("Wussell Westbwook",0,"White Whales");
-
-let players = [player1,player2,player3,player4,player5,player6,player7,player8];
+let players = [];
 let placing = [];
 let tied = [];
 let win = [];
+/* Game Function Variables END ----------------------------- */
 
+/* =================================== Game Backend START */ 
+/* ----------------------------- Shoot START */
 function gameShooting(var1){
   var1.forEach(element => {
     element.shoot();
   });
 }
+/* Shoot END ----------------------------- */
 
+/* ----------------------------- Player Sort START */
 function playerSort(input,output){
   let scores = scoreSort(input);
   let highest_score = Math.max(...scores);
@@ -62,14 +83,18 @@ function playerSort(input,output){
     console.log("");
   }
 }
+/* Player Sort END ----------------------------- */
 
+/* ----------------------------- Player Tiebreaker START */
 function tieBreaker(input){
   input.forEach(player => {
     player.score = 0;
   });
   gameShooting(input);
 }
+/* Player Tiebreaker END ----------------------------- */
 
+/* ----------------------------- Player Placing START */
 function placePlayer(input){
   if(input.length == 1){
     console.log(`Round winner is ${input[0].name}.`);
@@ -82,7 +107,9 @@ function placePlayer(input){
   });
   input.splice(0,1);
 }
+/* Player Placing END ----------------------------- */
 
+/* ----------------------------- Player Score Sorting START */
 function scoreSort(input){
   let scores = [];
   input.forEach(player => {
@@ -90,53 +117,9 @@ function scoreSort(input){
   });
   return scores;
 }
+/* Player Score Sorting END ----------------------------- */
 
-function showRemaining(input){
-  let emoji;
-  let scores = scoreSort(input);
-  let highest_score = Math.max(...scores);
-  input.forEach(player => {
-    if(player.score == highest_score){
-      emoji = green_circle;
-    } else {
-      emoji = "  ";
-    }
-    console.log(`${emoji} ${player.name} has a score of: ${player.score}`);
-  });
-  console.log("");
-}
-
-function showPlacing(){
-  console.log(`=======================================
-${trophy} Rankings:
-=======================================`);
-  let place_msg = ``;
-  let emoji;
-  placing.forEach((player,i) => {
-    num = i+1;
-    place = String(num).slice(-1);
-    switch (place) {
-      case "1":
-        place_msg = `${place}st`;
-        emoji = first_place;
-        break;
-      case "2":
-        place_msg = `${place}nd`;
-        emoji = second_place;
-        break;
-      case "3":
-        place_msg = `${place}rd`;
-        emoji = third_place;
-        break;
-      default:
-        place_msg = `${place}th`;
-        emoji = "  ";
-        break;
-    }
-    console.log(`${emoji} ${player.name}: ${place_msg} place.`);
-  });
-}
-
+/* ----------------------------- Main Game Function START */
 function gameStart(){
   let start = true;
   let round = 0;
@@ -191,16 +174,86 @@ ${basketball} Round ${round + 1} ${tiebreaker_msg}
   } while (players.length > 0);
   showPlacing();
 }
+/* Main Game Function END ----------------------------- */
+/* Game Backend END =================================== */ 
 
-
-
-gameStart();
-
-
-const cards = document.querySelectorAll(".card");
-cards.forEach(card => {
-  card.style.setProperty("--sizeState","big");
-  card.addEventListener("click", () => {
-    card.classList.toggle("card-focus");
+/* =================================== Game Frontend START */ 
+/* ----------------------------- Show Winners START */
+function showPlacing(){
+  console.log(`=======================================
+${trophy} Rankings:
+=======================================`);
+  let place_msg = ``;
+  let emoji;
+  placing.forEach((player,i) => {
+    num = i+1;
+    place = String(num).slice(-1);
+    switch (place) {
+      case "1":
+        place_msg = `${place}st`;
+        emoji = first_place;
+        break;
+      case "2":
+        place_msg = `${place}nd`;
+        emoji = second_place;
+        break;
+      case "3":
+        place_msg = `${place}rd`;
+        emoji = third_place;
+        break;
+      default:
+        place_msg = `${place}th`;
+        emoji = "  ";
+        break;
+    }
+    console.log(`${emoji} ${player.name}: ${place_msg} place.`);
   });
-});
+}
+/* Show Winners END ----------------------------- */
+
+/* ----------------------------- Player Round Show START */
+function showRemaining(input){
+  let emoji;
+  let scores = scoreSort(input);
+  let highest_score = Math.max(...scores);
+  input.forEach(player => {
+    if(player.score == highest_score){
+      emoji = green_circle;
+    } else {
+      emoji = "  ";
+    }
+    console.log(`${emoji} ${player.name} has a score of: ${player.score}`);
+  });
+  console.log("");
+}
+
+/* Player Round Show END ----------------------------- */
+function createPlayerNode(player_name){
+  let player_row = document.createElement("tr");
+  let name_td = document.createElement("td");
+  name_td.innerHTML = player_name;
+  let score_td = document.createElement("td");
+  score_td.classList.toggle("score_hide");
+  let delete_td = document.createElement("td");
+  delete_td.classList.toggle("delete_hide");
+
+  player_table.querySelector("tbody").append(player_row);
+  player_row.append(name_td);
+  player_row.append(score_td);
+  player_row.append(delete_td);
+}
+
+/* ----------------------------- Take Players START */
+function takePlayers(){
+  let add_input = document.querySelector("#add_player input");
+  let input_val = add_input.value;
+  if (!input_val.split(" ").join("") == ""){
+    let new_player = new Player(input_val, 0, "Blue Team");
+    players.push(new_player);
+    createPlayerNode(input_val);
+  } else {
+    alert("Please input a proper name.");
+  }
+}
+/* Take Players END ----------------------------- */
+/* Game Frontend END =================================== */ 
