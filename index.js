@@ -16,27 +16,27 @@ class Player{
   }
 }
 
-trophy = String.fromCodePoint(0x1F3C6); // 🏆
-fire = String.fromCodePoint(0x1F3C0); // 🏀
-basketball = String.fromCodePoint(0x1F525); // 🔥
-first_place = String.fromCodePoint(0x1f947); // 🥇
-second_place = String.fromCodePoint(0x1f948); // 🥈
-third_place = String.fromCodePoint(0x1f949); // 🥉
-green_circle = String.fromCodePoint(0x1F7E2); // 🟢
+const trophy = String.fromCodePoint(0x1F3C6); // 🏆
+const fire = String.fromCodePoint(0x1F3C0); // 🏀
+const basketball = String.fromCodePoint(0x1F525); // 🔥
+const first_place = String.fromCodePoint(0x1f947); // 🥇
+const second_place = String.fromCodePoint(0x1f948); // 🥈
+const third_place = String.fromCodePoint(0x1f949); // 🥉
+const green_circle = String.fromCodePoint(0x1F7E2); // 🟢
 
-player1 = new Player("Johnson McBard",0,"Black Bulls");
-player2 = new Player("Bron Cain",0,"Black Bulls");
-player3 = new Player("Shaun Lane",0,"Black Bulls");
-player4 = new Player("Lebon Zane",0,"White Whales");
-player5 = new Player("Tom Cory",0,"White Whales");
-player6 = new Player("Kevin Hart",0,"White Whales");
-player7 = new Player("Jame Hard",0,"Black Bulls");
-player8 = new Player("Wussell Westbwook",0,"White Whales");
+const player1 = new Player("Johnson McBard",0,"Black Bulls");
+const player2 = new Player("Bron Cain",0,"Black Bulls");
+const player3 = new Player("Shaun Lane",0,"Black Bulls");
+const player4 = new Player("Lebon Zane",0,"White Whales");
+const player5 = new Player("Tom Cory",0,"White Whales");
+const player6 = new Player("Kevin Hart",0,"White Whales");
+const player7 = new Player("Jame Hard",0,"Black Bulls");
+const player8 = new Player("Wussell Westbwook",0,"White Whales");
 
-players = [player1,player2,player3,player4,player5,player6,player7,player8];
-placing = [];
-tied = [];
-win = [];
+let players = [player1,player2,player3,player4,player5,player6,player7,player8];
+let placing = [];
+let tied = [];
+let win = [];
 
 function gameShooting(var1){
   var1.forEach(element => {
@@ -45,8 +45,8 @@ function gameShooting(var1){
 }
 
 function playerSort(input,output){
-  scores = scoreSort(input);
-  highest_score = Math.max(...scores);
+  let scores = scoreSort(input);
+  let highest_score = Math.max(...scores);
   scores.forEach((score, i) => {
     if(score == highest_score){
       let e = new Player();
@@ -84,7 +84,7 @@ function placePlayer(input){
 }
 
 function scoreSort(input){
-  scores = [];
+  let scores = [];
   input.forEach(player => {
     scores.push(player.score);
   });
@@ -93,8 +93,8 @@ function scoreSort(input){
 
 function showRemaining(input){
   let emoji;
-  scores = scoreSort(input);
-  highest_score = Math.max(...scores);
+  let scores = scoreSort(input);
+  let highest_score = Math.max(...scores);
   input.forEach(player => {
     if(player.score == highest_score){
       emoji = green_circle;
@@ -110,7 +110,7 @@ function showPlacing(){
   console.log(`=======================================
 ${trophy} Rankings:
 =======================================`);
-  place_msg = ``;
+  let place_msg = ``;
   let emoji;
   placing.forEach((player,i) => {
     num = i+1;
@@ -138,12 +138,12 @@ ${trophy} Rankings:
 }
 
 function gameStart(){
-  start = true;
-  round = 0;
-  tiebreaker_round = 0;
-  tiebreaker_msg = ``;
-  reshoot = false
-  nxt_round = false;
+  let start = true;
+  let round = 0;
+  let tiebreaker_round = 0;
+  let tiebreaker_msg = ``;
+  let reshoot = false
+  let nxt_round = false;
   do {
     if(tied.length > 1){
       tiebreaker_round++;
