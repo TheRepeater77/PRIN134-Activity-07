@@ -1,25 +1,3 @@
-/* ----------------------------- Front End Variables START */ 
-const cards = document.querySelectorAll(".card");
-cards.forEach(card => {
-  card.style.setProperty("--sizeState","big");
-  card.addEventListener("click", () => {
-    card.classList.toggle("card-focus");
-  });
-});
-
-const add_player_btn = document.querySelector("#add_player button");
-add_player_btn.addEventListener("click", () => {
-  takePlayers();
-});
-const start_btn = document.querySelector(".start-button button");
-start_btn.addEventListener("click", () => {
-  gameStart();
-});
-
-const player_list = document.querySelector("#player_list");
-const player_table = player_list.querySelector("table");
-/* Front End Variables END ----------------------------- */ 
-
 /* ----------------------------- Player Object START */ 
 class Player{
   constructor(var1, var2, var3){
@@ -41,6 +19,16 @@ class Player{
 /* Player Object END ----------------------------- */ 
 
 /* ----------------------------- Game Function Variables START */ 
+const interval = 1000/60;
+let lastTimerCheck = 0;
+let millisLastElapsed = 0;
+let millisElapsed = 0;
+lastTimerCheck = Date.now();
+setInterval(()=>{
+  millisElapsed = Date.now() - lastTimerCheck + millisLastElapsed;
+},millisLastElapsed);
+
+
 const trophy = String.fromCodePoint(0x1F3C6); // 🏆
 const fire = String.fromCodePoint(0x1F3C0); // 🏀
 const basketball = String.fromCodePoint(0x1F525); // 🔥
@@ -54,6 +42,35 @@ let placing = [];
 let tied = [];
 let win = [];
 /* Game Function Variables END ----------------------------- */
+
+/* ----------------------------- Event Listeners START */ 
+const player_list = document.querySelector("#player_list");
+const player_table = player_list.querySelector("table");
+const add_player = document.querySelector("#add_player");
+const cards = document.querySelectorAll(".card");
+cards.forEach(card => {
+  card.style.setProperty("--sizeState","big");
+  card.addEventListener("click", () => {
+    card.classList.toggle("card-focus");
+  });
+});
+
+const add_player_btn = add_player.querySelector("#add_player button");
+add_player_btn.addEventListener("click", () => {
+  takePlayers();
+});
+const start_btn = document.querySelector(".start-button button");
+start_btn.addEventListener("click", () => {
+  if(players.length > 1){
+    gameStart();
+    buttonDisapper();
+  } else if (players.length == 1){
+    alert("Need more players.");
+  } else {
+    alert("No players. Can't start. 2 should be enough.");
+  }
+});
+/* Event Listeners END ----------------------------- */ 
 
 /* =================================== Game Backend START */ 
 /* ----------------------------- Shoot START */
@@ -186,8 +203,8 @@ ${trophy} Rankings:
   let place_msg = ``;
   let emoji;
   placing.forEach((player,i) => {
-    num = i+1;
-    place = String(num).slice(-1);
+    let num = i+1;
+    let place = String(num).slice(-1);
     switch (place) {
       case "1":
         place_msg = `${place}st`;
@@ -251,9 +268,26 @@ function takePlayers(){
     let new_player = new Player(input_val, 0, "Blue Team");
     players.push(new_player);
     createPlayerNode(input_val);
+    add_input.value = "";
   } else {
     alert("Please input a proper name.");
   }
 }
 /* Take Players END ----------------------------- */
+
+/* ----------------------------- Hide Player Add and Buttons START */
+function gameStartHide(){
+  add_player.classList.toggle("wipe-hide");
+  start_btn.classList.toggle("hide");
+}
+setTimeout(() => {
+  gameStartHide();
+}, 1000);
+/* Hide Player Add and Buttons END ----------------------------- */
+
+/* ----------------------------- Restart Game START */
+function restartGame(){
+
+}
+/* Restart Game END ----------------------------- */
 /* Game Frontend END =================================== */ 

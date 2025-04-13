@@ -67,6 +67,16 @@ button:active strong{
     transition-duration: 100ms;
 }
 
+.hide{
+    display: none;
+}
+
+.wipe-hide{
+    animation: wipe 0.5s;
+    animation-timing-function:ease-out;
+    animation-fill-mode: forwards;
+}
+
 /* ========================================= PLAYER START */
 #player-container{
     width: 500px;
@@ -78,6 +88,13 @@ button:active strong{
 /* ---------------------------- PLAYER ADD START */
 #add_player{
     margin-bottom: 20px;
+    height: 50px;
+    width: 100%;
+    overflow-y: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: end;
 }
 #add_player form{
     width: 100%;
@@ -123,15 +140,12 @@ button:active strong{
 
 #player_list table td{
     text-align: center;
-    
 }
 
-.score_show{
-    transition-duration: 100ms;
+#player_list table tr{
 }
-.score_hide{
-    display: none;
-}
+
+
 /* PLAYER END ========================================= */
 
 /* ========================================= GAME START */
@@ -221,3 +235,17 @@ button:active strong{
     width: 200px;
 }
 /* GAME END ========================================= */
+
+@keyframes wipe {
+    0%{
+        display: flex;
+        align-items: end;
+    }
+    100%{
+        height: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        border: 0px;
+        margin-bottom: 0px;
+    }
+}
