@@ -37,6 +37,8 @@ const second_place = String.fromCodePoint(0x1f948); // 🥈
 const third_place = String.fromCodePoint(0x1f949); // 🥉
 const green_circle = String.fromCodePoint(0x1F7E2); // 🟢
 
+
+let names = [];
 let players = [];
 let placing = [];
 let tied = [];
@@ -151,16 +153,27 @@ function gameStart(){
       const card_con = document.createElement("div");
       const card_div = document.createElement("div");
       const card_strong = document.createElement("strong");
-      const card_ol_con = document.createElement("div");
-      const card_ol = document.createElement("ol");
+      const card_tbl = document.createElement("table");
+      const card_tbl_th = document.createElement("thead");
+      const card_th_players = document.createElement("td");
+      const card_th_scores = document.createElement("td");
+      const card_tbl_tbody = document.createElement("tbody");
+      card_th_players.innerHTML = "Players"
+      card_th_scores.innerHTML = "Scores"
+
       card_con.classList.toggle("card-con");
       card_div.classList.toggle("card");
       card_strong.classList.toggle("round-title");
-      card_ol_con.classList.toggle("round-players");
+      
+
       rounds.append(card_con);
       card_con.append(card_div);
       card_div.append(card_strong);
-      card_div.append(card_ol_con);
+      card_div.append(card_tbl);
+      card_tbl.append(card_tbl_th);
+      card_tbl_th.append(card_th_players);
+      card_tbl_th.append(card_th_scores);
+      card_tbl.append(card_tbl_tbody);
       card_div.addEventListener("click", () => {
         card_div.classList.toggle("card-focus");
       });
@@ -174,13 +187,13 @@ ${basketball} Round ${round + 1} ${tiebreaker_msg}
         start = false;
       }
       console.log("Remaining Players:");
-      showRemaining(players);
+      showRemaining(players, card_tbl_tbody);
       if(tied.length < 2) {
         playerSort(players, tied);
       } else {
         tieBreaker(tied);
         console.log("Tie Breaker Scores:");
-        showRemaining(tied)
+        showRemaining(tied, card_tbl_tbody)
         playerSort(tied, win);
         reshoot = true;
         tied = win;
@@ -215,6 +228,11 @@ ${basketball} Round ${round + 1} ${tiebreaker_msg}
 /* =================================== Game Frontend START */ 
 /* ----------------------------- Show Winners START */
 function showPlacing(){
+  let tbody = player_table.querySelector("tbody");
+  tbody.remove();
+  let new_tbody = document.createElement("tbody");
+  player_table.append(new_tbody);
+
   console.log(`=======================================
 ${trophy} Rankings:
 =======================================`);
@@ -242,12 +260,17 @@ ${trophy} Rankings:
         break;
     }
     console.log(`${emoji} ${player.name}: ${place_msg} place.`);
+    let player_tr = document.createElement("tr");
+    let player_td = document.createElement("td");
+    player_td.innerHTML = `${emoji} ${player.name}: ${place_msg} place.`;
+    new_tbody.append(player_tr);
+    player_tr.append(player_td);
   });
 }
 /* Show Winners END ----------------------------- */
 
 /* ----------------------------- Player Round Show START */
-function showRemaining(input){
+function showRemaining(input, tbody){
   let emoji;
   let scores = scoreSort(input);
   let highest_score = Math.max(...scores);
@@ -257,7 +280,16 @@ function showRemaining(input){
     } else {
       emoji = "  ";
     }
-    let card_li = document.createElement("li");
+    let card_tbl_tr = document.createElement("tr");
+    let card_td_player = document.createElement("td");
+    let card_td_score = document.createElement("td");
+    card_td_score.classList.toggle("round-score");
+    card_td_player.innerHTML = `${emoji} ${player.name}`;
+    card_td_score.innerHTML = player.score;
+    tbody.append(card_tbl_tr);
+    card_tbl_tr.append(card_td_player);
+    card_tbl_tr.append(card_td_score);
+
     console.log(`${emoji} ${player.name} has a score of: ${player.score}`);
   });
   console.log("");
@@ -283,11 +315,16 @@ function createPlayerNode(player_name){
 function takePlayers(){
   let add_input = document.querySelector("#add_player input");
   let input_val = add_input.value;
-  if (!input_val.split(" ").join("") == ""){
+  if (!input_val.split(" ").join("") == "" && players.length < 10 && !names.includes(input_val)){
     let new_player = new Player(input_val, 0, "Blue Team");
+    names.push(input_val)
     players.push(new_player);
     createPlayerNode(input_val);
     add_input.value = "";
+  } else if(players.length >= 10){
+    alert("Maximum amount of players reached.");
+  } else if(names.includes(input_val)){
+    alert("Player already added.");
   } else {
     alert("Please input a proper name.");
   }
