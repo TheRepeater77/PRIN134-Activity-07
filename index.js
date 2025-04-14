@@ -186,9 +186,9 @@ ${basketball} Round ${round + 1} ${tiebreaker_msg}
         gameShooting(players);
         start = false;
       }
-      console.log("Remaining Players:");
-      showRemaining(players, card_tbl_tbody);
       if(tied.length < 2) {
+        console.log("Remaining Players:");
+        showRemaining(players, card_tbl_tbody);
         playerSort(players, tied);
       } else {
         tieBreaker(tied);
@@ -211,7 +211,7 @@ ${basketball} Round ${round + 1} ${tiebreaker_msg}
         nxt_round = true;
       }
       console.log("\n\n\n");
-      if(nxt_round == true && reshoot == true && tied.length == 0){
+      if(nxt_round == true && tied.length == 0){
         round++;
         nxt_round = false;
         reshoot = false; 

@@ -140,6 +140,7 @@ button:active strong{
 
 #player_list table td{
     text-align: center;
+    padding-bottom: 2%;
 }
 
 #player_list table tr{
@@ -243,6 +244,7 @@ button:active strong{
     border: 2px solid black;
     padding-left: 2%;
     padding-right: 2%;
+    padding-bottom: 2%;
 }
 
 .card table tr{
