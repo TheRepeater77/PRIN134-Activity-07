@@ -47,13 +47,7 @@ let win = [];
 const player_list = document.querySelector("#player_list");
 const player_table = player_list.querySelector("table");
 const add_player = document.querySelector("#add_player");
-const cards = document.querySelectorAll(".card");
-cards.forEach(card => {
-  card.style.setProperty("--sizeState","big");
-  card.addEventListener("click", () => {
-    card.classList.toggle("card-focus");
-  });
-});
+const rounds = document.querySelector("#rounds");
 
 const add_player_btn = add_player.querySelector("#add_player button");
 add_player_btn.addEventListener("click", () => {
@@ -63,7 +57,7 @@ const start_btn = document.querySelector(".start-button button");
 start_btn.addEventListener("click", () => {
   if(players.length > 1){
     gameStart();
-    buttonDisapper();
+    placingPhase();
   } else if (players.length == 1){
     alert("Need more players.");
   } else {
@@ -144,6 +138,7 @@ function gameStart(){
   let tiebreaker_msg = ``;
   let reshoot = false
   let nxt_round = false;
+
   do {
     if(tied.length > 1){
       tiebreaker_round++;
@@ -151,42 +146,65 @@ function gameStart(){
     if(tiebreaker_round > 0){
       tiebreaker_msg = `${fire} Tie Breaker ${tiebreaker_round}`
     }
-    console.log(`=======================================
+    if(players.length > 1){
+      // Make Card
+      const card_con = document.createElement("div");
+      const card_div = document.createElement("div");
+      const card_strong = document.createElement("strong");
+      const card_ol_con = document.createElement("div");
+      const card_ol = document.createElement("ol");
+      card_con.classList.toggle("card-con");
+      card_div.classList.toggle("card");
+      card_strong.classList.toggle("round-title");
+      card_ol_con.classList.toggle("round-players");
+      rounds.append(card_con);
+      card_con.append(card_div);
+      card_div.append(card_strong);
+      card_div.append(card_ol_con);
+      card_div.addEventListener("click", () => {
+        card_div.classList.toggle("card-focus");
+      });
+      
+      console.log(`=======================================
 ${basketball} Round ${round + 1} ${tiebreaker_msg}
 =======================================`);
-    if(start == true){
-      gameShooting(players);
-      start = false;
-    }
-    console.log("Remaining Players:");
-    showRemaining(players);
-    if(tied.length < 2) {
-      playerSort(players, tied);
+      card_strong.innerHTML = `${basketball} Round ${round + 1} ${tiebreaker_msg}`
+      if(start == true){
+        gameShooting(players);
+        start = false;
+      }
+      console.log("Remaining Players:");
+      showRemaining(players);
+      if(tied.length < 2) {
+        playerSort(players, tied);
+      } else {
+        tieBreaker(tied);
+        console.log("Tie Breaker Scores:");
+        showRemaining(tied)
+        playerSort(tied, win);
+        reshoot = true;
+        tied = win;
+        win = [];
+      }
+      if(win.length == 1){
+        placePlayer(win);
+        tiebreaker_round = 0;
+        tiebreaker_msg = ``;
+        nxt_round = true;
+      } else if (tied.length == 1) {
+        placePlayer(tied);
+        tiebreaker_round = 0;
+        tiebreaker_msg = ``;
+        nxt_round = true;
+      }
+      console.log("\n\n\n");
+      if(nxt_round == true && reshoot == true && tied.length == 0){
+        round++;
+        nxt_round = false;
+        reshoot = false; 
+      }
     } else {
-      tieBreaker(tied);
-      console.log("Tie Breaker Scores:");
-      showRemaining(tied)
-      playerSort(tied, win);
-      reshoot = true;
-      tied = win;
-      win = [];
-    }
-    if(win.length == 1){
-      placePlayer(win);
-      tiebreaker_round = 0;
-      tiebreaker_msg = ``;
-      nxt_round = true;
-    } else if (tied.length == 1) {
-      placePlayer(tied);
-      tiebreaker_round = 0;
-      tiebreaker_msg = ``;
-      nxt_round = true;
-    }
-    console.log("\n\n\n");
-    if(nxt_round == true && reshoot == true && tied.length == 0){
-      round++;
-      nxt_round = false;
-      reshoot = false; 
+      placing.push(players.pop());
     }
   } while (players.length > 0);
   showPlacing();
@@ -239,6 +257,7 @@ function showRemaining(input){
     } else {
       emoji = "  ";
     }
+    let card_li = document.createElement("li");
     console.log(`${emoji} ${player.name} has a score of: ${player.score}`);
   });
   console.log("");
@@ -275,15 +294,13 @@ function takePlayers(){
 }
 /* Take Players END ----------------------------- */
 
-/* ----------------------------- Hide Player Add and Buttons START */
-function gameStartHide(){
+/* ----------------------------- Placing Phase START */
+function placingPhase(){
   add_player.classList.toggle("wipe-hide");
   start_btn.classList.toggle("hide");
+  rounds.classList.toggle("placing-phase");
 }
-setTimeout(() => {
-  gameStartHide();
-}, 1000);
-/* Hide Player Add and Buttons END ----------------------------- */
+/* Placing Phase END ----------------------------- */
 
 /* ----------------------------- Restart Game START */
 function restartGame(){
