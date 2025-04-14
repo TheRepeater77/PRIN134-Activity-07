@@ -228,11 +228,10 @@ button:active strong{
 }
 
 .card table{
-    width: 100%;
+    width: 90%;
     height: auto;
     font-size: 100%;
     padding: 5%;
-    border: 2px solid black;
     border-collapse: collapse;
 }
 
@@ -242,9 +241,17 @@ button:active strong{
 
 .card table td{
     border: 2px solid black;
+    border-top: 0;
     padding-left: 2%;
     padding-right: 2%;
     padding-bottom: 2%;
+}
+
+.card table td:nth-child(1){
+    border-left: 0;
+}
+.card table td:nth-child(2){
+    border-right: 0;
 }
 
 .card table tr{
